@@ -1,14 +1,18 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { App } from './app/app.component';
-import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { routes } from './app/app.routes';
-import { authInterceptor } from './app/interceptors/auth.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { importProvidersFrom } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+import { App } from './app/app.component';       // Your root component
+import { appRouting } from './app/app.routes';   // Your routes
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor]))
+    provideAnimations(),
+    provideHttpClient(),
+    appRouting,
+    importProvidersFrom(CommonModule, FormsModule, ReactiveFormsModule)
   ]
-})
-  .catch(err => console.error(err));
+});
