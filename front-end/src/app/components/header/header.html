@@ -1,0 +1,36 @@
+<header class="app-header">
+  <div class="header-content">
+    <div class="header-left">
+      <img src="/images/title_logo.jpg" alt="Logo" class="header-logo" />
+      <h1 class="header-title">{{ title }}</h1>
+    </div>
+    <div class="header-right">
+      <div class="profile-container">
+        <img 
+          [src]="getProfilePictureUrl()" 
+          alt="Profile" 
+          class="profile-picture"
+          (click)="toggleProfileMenu()"
+        />
+        <div class="profile-menu" *ngIf="showProfileMenu" (click)="$event.stopPropagation()">
+          <div class="profile-menu-header">
+            <img [src]="getProfilePictureUrl()" alt="Profile" class="menu-profile-picture" />
+            <div class="menu-user-name">{{ getFullName() }}</div>
+          </div>
+          <div class="profile-menu-actions">
+            <button class="menu-button" (click)="goToProfile()">
+              <span class="menu-icon">👤</span>
+              Profile
+            </button>
+            <button class="menu-button logout-button" (click)="logout()">
+              <span class="menu-icon">🚪</span>
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="profile-menu-overlay" *ngIf="showProfileMenu" (click)="closeProfileMenu()"></div>
+</header>
+

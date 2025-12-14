@@ -1,0 +1,86 @@
+<app-header [title]="classroom?.subject || 'Classroom'"></app-header>
+<div class="classroom-page-wrapper">
+  <div class="classroom-header">
+    <button class="btn btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h2 class="classroom-title">{{ classroom?.subject }}</h2>
+  </div>
+
+  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
+    {{ message }}
+  </div>
+
+  <div class="classroom-info-card">
+    <div class="info-row">
+      <div class="info-item">
+        <strong>Classroom Code:</strong>
+        <span class="classroom-code">{{ classroom?.code }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Additional Info:</strong>
+        <span>{{ classroom?.additional_info || 'None' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sessions-section">
+    <div class="section-header">
+      <h3>Sessions</h3>
+      <button class="btn btn-create" (click)="showSessionPopup = true">+ Create Session</button>
+    </div>
+
+    <div class="sessions-list">
+      <div *ngFor="let session of sessions" class="session-card" (click)="viewSession(session.id)">
+        <div class="session-header">
+          <h4>{{ session.topic }}</h4>
+          <span class="badge" [ngClass]="session.is_open ? 'badge-open' : 'badge-closed'">
+            {{ session.is_open ? 'Open' : 'Closed' }}
+          </span>
+        </div>
+        <div class="session-details">
+          <p><strong>Date:</strong> {{ session.date | date:'fullDate' }}</p>
+          <p><strong>Time Created:</strong> {{ session.time_created | date:'short' }}</p>
+        </div>
+        <div class="session-actions">
+          <button class="btn btn-sm btn-view" (click)="viewSession(session.id); $event.stopPropagation()">
+            View Details
+          </button>
+          <button *ngIf="session.is_open" 
+                  class="btn btn-sm btn-close" 
+                  (click)="closeSession(session.id); $event.stopPropagation()">
+            Close Session
+          </button>
+        </div>
+      </div>
+      <div *ngIf="sessions.length === 0" class="empty-state">
+        <p>No sessions yet. Create your first session to get started!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Session Modal -->
+  <div class="modal" [class.show]="showSessionPopup" *ngIf="showSessionPopup" style="display: block; background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Session</h5>
+          <button type="button" class="btn-close" (click)="showSessionPopup = false"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Topic <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="newSession.topic" placeholder="e.g., Chapter 5: Algebra">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date <span class="text-danger">*</span></label>
+            <input type="date" class="form-control" [(ngModel)]="newSession.date" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="showSessionPopup = false">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="createSession()">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

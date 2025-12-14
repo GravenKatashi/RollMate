@@ -1,0 +1,57 @@
+<app-header title="Teacher Dashboard"></app-header>
+<div class="dashboard-wrapper">
+
+  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
+    {{ message }}
+  </div>
+
+  <!-- Create Classroom Button -->
+  <div class="mb-3">
+    <button class="btn btn-create" (click)="showClassroomPopup = true">+ Create New Classroom</button>
+  </div>
+
+  <!-- Create Classroom Modal -->
+  <div class="modal" [class.show]="showClassroomPopup" *ngIf="showClassroomPopup" style="display: block; background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Classroom</h5>
+          <button type="button" class="btn-close" (click)="showClassroomPopup = false"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Subject Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="newClassroom.subject" placeholder="e.g., Mathematics 101">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Additional Info</label>
+            <textarea class="form-control" [(ngModel)]="newClassroom.additional_info" rows="3" placeholder="Optional description"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="showClassroomPopup = false">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="createClassroom()">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classrooms List -->
+  <div class="classrooms-grid">
+    <div *ngFor="let classroom of classrooms" class="classroom-card" (click)="selectClassroom(classroom)">
+      <div class="classroom-card-header">
+        <h4>{{ classroom.subject }}</h4>
+        <span class="classroom-code-small">{{ classroom.code }}</span>
+      </div>
+      <p class="classroom-description">{{ classroom.additional_info || 'No description' }}</p>
+      <div class="classroom-stats">
+        <span><strong>{{ classroom.sessions?.length || 0 }}</strong> Sessions</span>
+        <span><strong>{{ classroom.students?.length || 0 }}</strong> Students</span>
+      </div>
+    </div>
+    <div *ngIf="classrooms.length === 0" class="empty-classrooms">
+      <p>No classrooms yet. Create one to get started!</p>
+    </div>
+  </div>
+
+</div>

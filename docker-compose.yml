@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./back-end
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./back-end:/var/www
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: login_system
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  angular:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - "4201:4201"
+    volumes:
+      - ./front-end:/app
+      - /app/node_modules
+    command: sh -c "npx ng serve --host 0.0.0.0 --port 4201"
+
+volumes:
+  mysql_data:

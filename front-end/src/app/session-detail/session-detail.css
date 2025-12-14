@@ -1,0 +1,281 @@
+.session-detail-wrapper {
+  min-height: 100vh;
+  background: #f7fafc;
+  padding: 2rem;
+}
+
+.session-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-back {
+  background: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  background: #cbd5e0;
+}
+
+.session-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+}
+
+.session-info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.info-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-item strong {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.badge-open {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.badge-closed {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.students-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sort-controls label {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.form-select {
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form-select:focus {
+  border-color: #667eea;
+  outline: none;
+}
+
+.students-table-wrapper {
+  overflow-x: auto;
+}
+
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-table thead {
+  background: #f7fafc;
+}
+
+.students-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.students-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.students-table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.status-present {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.status-late {
+  background: #fefcbf;
+  color: #744210;
+}
+
+.status-absent {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-present {
+  background: #48bb78;
+  color: white;
+}
+
+.btn-present:hover:not(:disabled) {
+  background: #38a169;
+}
+
+.btn-late {
+  background: #ed8936;
+  color: white;
+}
+
+.btn-late:hover:not(:disabled) {
+  background: #dd6b20;
+}
+
+.btn-absent {
+  background: #f56565;
+  color: white;
+}
+
+.btn-absent:hover:not(:disabled) {
+  background: #e53e3e;
+}
+
+.btn-sm:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.alert {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #718096;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .session-detail-wrapper {
+    padding: 1rem;
+  }
+
+  .session-title {
+    font-size: 1.5rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .students-table {
+    font-size: 0.875rem;
+  }
+
+  .students-table th,
+  .students-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .btn-sm {
+    width: 100%;
+  }
+}
+

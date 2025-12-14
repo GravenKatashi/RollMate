@@ -1,0 +1,90 @@
+<app-header [title]="session?.topic || 'Session Details'"></app-header>
+<div class="session-detail-wrapper">
+  <div class="session-header">
+    <button class="btn btn-back" (click)="goBack()">← Back to Classroom</button>
+    <h2 class="session-title">{{ session?.topic }}</h2>
+  </div>
+
+  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') || message.includes('late') ? 'alert-success' : 'alert-danger'" role="alert">
+    {{ message }}
+  </div>
+
+  <div class="session-info-card">
+    <div class="info-row">
+      <div class="info-item">
+        <strong>Date:</strong>
+        <span>{{ session?.date | date:'fullDate' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Time Created:</strong>
+        <span>{{ session?.time_created | date:'short' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Status:</strong>
+        <span class="badge" [ngClass]="session?.is_open ? 'badge-open' : 'badge-closed'">
+          {{ session?.is_open ? 'Open' : 'Closed' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="students-section">
+    <div class="section-header">
+      <h3>Enrolled Students</h3>
+      <div class="sort-controls">
+        <label>Sort by:</label>
+        <select class="form-select" [(ngModel)]="sortBy" (change)="onSortChange()">
+          <option value="name">Last Name</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="students-table-wrapper">
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Status</th>
+            <th>Time Present</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of sortedStudents">
+            <td>{{ getFullName(student) }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(student.attendance.status)">
+                {{ student.attendance.status | titlecase }}
+              </span>
+            </td>
+            <td>{{ student.attendance.time_present || '-' }}</td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn btn-sm btn-present" 
+                        (click)="updateStatus(student.id, 'present')"
+                        [disabled]="student.attendance.status === 'present'">
+                  Present
+                </button>
+                <button class="btn btn-sm btn-late" 
+                        (click)="markLate(student.id)"
+                        [disabled]="student.attendance.status === 'late'">
+                  Late
+                </button>
+                <button class="btn btn-sm btn-absent" 
+                        (click)="updateStatus(student.id, 'absent')"
+                        [disabled]="student.attendance.status === 'absent'">
+                  Absent
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="sortedStudents.length === 0">
+            <td colspan="4" class="text-center text-muted">No students enrolled in this classroom</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,77 @@
+<app-header title="My Attendance Calendar"></app-header>
+<div class="calendar-page-wrapper">
+  <div class="calendar-header">
+    <button class="btn btn-back" (click)="goBack()">← Back to Classroom</button>
+    <h2 class="calendar-title">My Attendance Calendar</h2>
+  </div>
+
+  <div *ngIf="message" class="alert alert-danger" role="alert">
+    {{ message }}
+  </div>
+
+  <div class="calendar-container">
+    <div class="calendar-header-info">
+      <h3>{{ getMonthName() }}</h3>
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-box calendar-present"></span>
+          <span>Present</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box calendar-late"></span>
+          <span>Late</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-box calendar-absent"></span>
+          <span>Absent</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calendar-grid">
+      <div class="calendar-weekday">Sun</div>
+      <div class="calendar-weekday">Mon</div>
+      <div class="calendar-weekday">Tue</div>
+      <div class="calendar-weekday">Wed</div>
+      <div class="calendar-weekday">Thu</div>
+      <div class="calendar-weekday">Fri</div>
+      <div class="calendar-weekday">Sat</div>
+
+      <div *ngFor="let day of getCalendarDays()" 
+           class="calendar-day"
+           [class.empty]="day.isEmpty"
+           [class.today]="day.isToday"
+           [ngClass]="day.hasSession ? getStatusClass(day.date) : ''">
+        <div *ngIf="!day.isEmpty" class="day-content">
+          <span class="day-number">{{ day.day }}</span>
+          <div *ngIf="day.hasSession" class="day-status" [title]="getTopic(day.date)">
+            {{ getStatusLabel(day.date) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="attendance-summary">
+    <h3>Attendance Summary</h3>
+    <div class="summary-stats">
+      <div class="stat-card present">
+        <div class="stat-value">{{ getCountByStatus('present') }}</div>
+        <div class="stat-label">Present</div>
+      </div>
+      <div class="stat-card late">
+        <div class="stat-value">{{ getCountByStatus('late') }}</div>
+        <div class="stat-label">Late</div>
+      </div>
+      <div class="stat-card absent">
+        <div class="stat-value">{{ getCountByStatus('absent') }}</div>
+        <div class="stat-label">Absent</div>
+      </div>
+      <div class="stat-card total">
+        <div class="stat-value">{{ attendances.length }}</div>
+        <div class="stat-label">Total Sessions</div>
+      </div>
+    </div>
+  </div>
+</div>
+

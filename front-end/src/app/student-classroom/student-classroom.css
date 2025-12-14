@@ -1,0 +1,261 @@
+.classroom-page-wrapper {
+  min-height: 100vh;
+  background: #f7fafc;
+  padding: 2rem;
+}
+
+.classroom-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-back {
+  background: #e2e8f0;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  background: #cbd5e0;
+}
+
+.classroom-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+}
+
+.classroom-info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.info-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.info-item strong {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.attendance-button-container {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.btn-attendance {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-attendance:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.sessions-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+}
+
+.sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.session-card {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.session-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.session-header h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 0.5rem 0;
+}
+
+.session-date {
+  color: #718096;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.session-time {
+  color: #a0aec0;
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+}
+
+.session-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.badge-open {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.badge-closed {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-block;
+}
+
+.status-present {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.status-late {
+  background: #fefcbf;
+  color: #744210;
+}
+
+.status-absent {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.session-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-mark-present {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-mark-present:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+}
+
+.btn-mark-present:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #a0aec0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #718096;
+}
+
+.alert {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .classroom-page-wrapper {
+    padding: 1rem;
+  }
+
+  .classroom-title {
+    font-size: 1.5rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .session-header {
+    flex-direction: column;
+  }
+
+  .session-status {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .session-actions {
+    width: 100%;
+  }
+
+  .btn-mark-present {
+    width: 100%;
+  }
+}
+

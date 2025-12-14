@@ -1,0 +1,59 @@
+<app-header title="Student Dashboard"></app-header>
+<div class="dashboard-wrapper">
+
+  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
+    {{ message }}
+  </div>
+
+  <!-- Join Classroom Button -->
+  <div class="mb-3">
+    <button class="btn btn-create" (click)="showJoinModal = true">+ Join Classroom</button>
+  </div>
+
+  <!-- Join Classroom Modal -->
+  <div class="modal" [class.show]="showJoinModal" *ngIf="showJoinModal" style="display: block; background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Join Classroom</h5>
+          <button type="button" class="btn-close" (click)="showJoinModal = false; joinCode = ''"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Enter Classroom Code</label>
+            <input type="text" 
+                   class="form-control text-uppercase" 
+                   [(ngModel)]="joinCode" 
+                   placeholder="e.g., ABC123"
+                   maxlength="6"
+                   (input)="joinCode = joinCode.toUpperCase()">
+            <small class="form-text text-muted">Enter the 6-character code provided by your teacher</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="showJoinModal = false; joinCode = ''">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="joinClassroom()">Join</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classrooms List -->
+  <div class="classrooms-grid">
+    <div *ngFor="let classroom of classrooms" class="classroom-card" (click)="selectClassroom(classroom)">
+      <div class="classroom-card-header">
+        <h4>{{ classroom.subject }}</h4>
+      </div>
+      <p class="classroom-description">{{ classroom.additional_info || 'No description' }}</p>
+      <div class="classroom-teacher">
+        <strong>Teacher:</strong> {{ classroom.teacher_name || getFullName(classroom.teacher) }}
+      </div>
+      <div class="classroom-stats">
+        <span><strong>{{ classroom.sessions?.length || 0 }}</strong> Sessions</span>
+      </div>
+    </div>
+    <div *ngIf="classrooms.length === 0" class="empty-classrooms">
+      <p>You haven't joined any classrooms yet. Click "Join Classroom" to get started!</p>
+    </div>
+  </div>
+</div>

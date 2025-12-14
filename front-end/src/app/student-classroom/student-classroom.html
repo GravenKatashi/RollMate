@@ -1,0 +1,63 @@
+<app-header [title]="classroom?.subject || 'Classroom'"></app-header>
+<div class="classroom-page-wrapper">
+  <div class="classroom-header">
+    <button class="btn btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h2 class="classroom-title">{{ classroom?.subject }}</h2>
+  </div>
+
+  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
+    {{ message }}
+  </div>
+
+  <div class="classroom-info-card">
+    <div class="info-row">
+      <div class="info-item">
+        <strong>Teacher:</strong>
+        <span>{{ getFullName(classroom?.teacher) || classroom?.teacher_name }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Additional Info:</strong>
+        <span>{{ classroom?.additional_info || 'None' }}</span>
+      </div>
+    </div>
+    <div class="attendance-button-container">
+      <button class="btn btn-attendance" (click)="viewAttendance()">Student's Attendance</button>
+    </div>
+  </div>
+
+  <div class="sessions-section">
+    <h3 class="section-title">Sessions</h3>
+
+    <div class="sessions-list">
+      <div *ngFor="let session of sessions" class="session-card">
+        <div class="session-header">
+          <div>
+            <h4>{{ session.topic }}</h4>
+            <p class="session-date">{{ session.date | date:'fullDate' }}</p>
+            <p class="session-time">Created: {{ session.time_created | date:'short' }}</p>
+          </div>
+          <div class="session-status">
+            <span class="badge" [ngClass]="session.is_open ? 'badge-open' : 'badge-closed'">
+              {{ session.is_open ? 'Open' : 'Closed' }}
+            </span>
+            <span class="status-badge" [ngClass]="'status-' + getStudentStatus(session)">
+              Your Status: {{ getStudentStatus(session) | titlecase }}
+            </span>
+          </div>
+        </div>
+        <div class="session-actions">
+          <button 
+            class="btn btn-mark-present" 
+            (click)="markPresent(session.id)"
+            [disabled]="!session.is_open || isAlreadyPresent(session)">
+            {{ isAlreadyPresent(session) ? 'Already Marked' : 'Mark Present' }}
+          </button>
+        </div>
+      </div>
+      <div *ngIf="sessions.length === 0" class="empty-state">
+        <p>No sessions yet. Wait for your teacher to create a session.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
