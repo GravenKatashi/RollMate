@@ -19,16 +19,16 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
-# Copy composer files
-COPY composer.json composer.lock ./
-
-# Install dependencies (no dev dependencies in production)
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Copy application files
+# Copy ALL application files first (artisan must exist)
 COPY . .
 
-# Set permissions
+# Install PHP dependencies
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction
+
+# Set correct permissions
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 755 /var/www/storage \
     && chmod -R 755 /var/www/bootstrap/cache
@@ -39,9 +39,8 @@ COPY docker/nginx.conf /etc/nginx/sites-available/default
 # Copy supervisor configuration
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose port
+# Expose HTTP port
 EXPOSE 80
 
-# Start supervisor
+# Start supervisor (nginx + php-fpm)
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
