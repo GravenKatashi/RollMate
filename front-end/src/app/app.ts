@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 
 bootstrapApplication(App, {
   providers: [
-    appRouting,
+    provideRouter(appRouting),
     provideHttpClient(),
     importProvidersFrom(CommonModule, FormsModule, ReactiveFormsModule)
   ]

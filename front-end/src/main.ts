@@ -5,12 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { App } from './app/app.component';       // Your root component
-import { appRouting } from './app/app.routes';   // Your routes
+import { routes } from './app/app.routes';   // Your routes
 
 bootstrapApplication(App, {
   providers: [
     provideHttpClient(),
-    appRouting,
+    routes,
     importProvidersFrom(CommonModule, FormsModule, ReactiveFormsModule)
   ]
 });

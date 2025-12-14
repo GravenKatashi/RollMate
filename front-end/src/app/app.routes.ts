@@ -1,4 +1,4 @@
-import { provideRouter, Route } from '@angular/router';
+import { Route } from '@angular/router';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { StudentDashboard } from './student-dashboard/student-dashboard';
@@ -44,4 +44,3 @@ export const routes: Route[] = [
   { path: '**', redirectTo: 'login' } // fallback for unknown routes
 ];
 
-export const appRouting = provideRouter(routes);
