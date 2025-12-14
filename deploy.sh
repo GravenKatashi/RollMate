@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# AWS Deployment Script for Attendance Tracking System
+# AWS Deployment Script for RollMate
 # Usage: ./deploy.sh
 
 set -e  # Exit on error
 
 echo "=========================================="
-echo "Attendance Tracking System - Deployment"
+echo "RollMate - Deployment"
 echo "=========================================="
 echo ""
 

@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.css']
 })
 export class Header implements OnInit {
-  @Input() title: string = 'Attendance Tracking System';
+  @Input() title: string = 'RollMate';
   user: any = null;
   showProfileMenu: boolean = false;
 

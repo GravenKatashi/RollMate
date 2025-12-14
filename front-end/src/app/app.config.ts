@@ -22,6 +22,6 @@ export const environment = {
   apiUrl: getApiUrl(),
 
   // App info
-  appName: 'My Attendance System',
+  appName: 'RollMate',
   version: '1.0.0'
 };

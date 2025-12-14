@@ -25,7 +25,7 @@ function getApiUrl(): string {
 export const environment = {
   production: true,
   apiUrl: getApiUrl(),
-  appName: 'Attendance Tracking System',
+  appName: 'RollMate',
   version: '1.0.0'
 };
 
