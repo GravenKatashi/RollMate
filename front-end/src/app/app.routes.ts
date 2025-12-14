@@ -13,34 +13,12 @@ export const routes: Route[] = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   { path: 'register', component: Register },
-  { 
-    path: 'student-dashboard', 
-    component: StudentDashboard 
-  },
-  { 
-    path: 'teacher-dashboard', 
-    component: TeacherDashboard 
-  },
-  {
-    path: 'teacher-classroom/:id',
-    component: TeacherClassroom
-  },
-  {
-    path: 'teacher-classroom/:classroomId/session/:sessionId',
-    component: SessionDetail
-  },
-  {
-    path: 'student-classroom/:id',
-    component: StudentClassroom
-  },
-  {
-    path: 'student-classroom/:id/attendance',
-    component: StudentAttendanceCalendar
-  },
-  {
-    path: 'profile',
-    component: Profile
-  },
-  { path: '**', redirectTo: 'login' } // fallback for unknown routes
+  { path: 'student-dashboard', component: StudentDashboard },
+  { path: 'teacher-dashboard', component: TeacherDashboard },
+  { path: 'teacher-classroom/:id', component: TeacherClassroom },
+  { path: 'teacher-classroom/:classroomId/session/:sessionId', component: SessionDetail },
+  { path: 'student-classroom/:id', component: StudentClassroom },
+  { path: 'student-classroom/:id/attendance', component: StudentAttendanceCalendar },
+  { path: 'profile', component: Profile },
+  { path: '**', redirectTo: 'login' }
 ];
-
