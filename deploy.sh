@@ -31,16 +31,6 @@ echo ""
 source .env
 
 # Check critical variables
-if [ -z "$APP_KEY" ]; then
-    echo "⚠️  Warning: APP_KEY is not set!"
-    echo "Generating APP_KEY..."
-    docker-compose -f docker-compose.prod.yml exec backend php artisan key:generate || {
-        echo "❌ Failed to generate APP_KEY. Please set it manually in back-end/.env"
-        exit 1
-    }
-    echo "✅ APP_KEY generated"
-fi
-
 if [ -z "$DB_PASSWORD" ] || [ "$DB_PASSWORD" = "root" ] || [ "$DB_PASSWORD" = "CHANGE_THIS_TO_SECURE_PASSWORD" ]; then
     echo "❌ Error: DB_PASSWORD is not set or using default value!"
     echo "Please set a secure password in .env file"
@@ -60,7 +50,7 @@ docker-compose -f docker-compose.prod.yml up -d
 
 echo ""
 echo "⏳ Waiting for services to be ready..."
-sleep 10
+sleep 15
 
 # Check if services are running
 if ! docker-compose -f docker-compose.prod.yml ps | grep -q "Up"; then
@@ -70,6 +60,18 @@ if ! docker-compose -f docker-compose.prod.yml ps | grep -q "Up"; then
 fi
 
 echo "✅ Services are running"
+echo ""
+
+# Generate APP_KEY if not set (after containers are running)
+if [ -z "$APP_KEY" ]; then
+    echo "⚠️  Warning: APP_KEY is not set!"
+    echo "Generating APP_KEY..."
+    docker-compose -f docker-compose.prod.yml exec backend php artisan key:generate || {
+        echo "❌ Failed to generate APP_KEY. Please set it manually in back-end/.env"
+        exit 1
+    }
+    echo "✅ APP_KEY generated"
+fi
 echo ""
 
 # Run database migrations
