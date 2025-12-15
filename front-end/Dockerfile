@@ -1,15 +1,17 @@
 FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
-# Copy package files first (for caching npm install)
-COPY package*.json ./
-
-# Install dependencies
+# Install dependencies first for better layer caching
+COPY package.json package-lock.json* ./
 RUN npm install
 
-# Copy rest of Angular project
+# Copy the rest of the app
 COPY . .
 
-# Run Angular dev server
-CMD ["sh", "-c", "npx ng serve --host 0.0.0.0 --port 4200"]
+# Expose Angular dev server port
+EXPOSE 4201
+
+# Start Angular dev server
+CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4201"]

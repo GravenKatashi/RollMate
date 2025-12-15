@@ -1,61 +1,88 @@
-<app-header [title]="classroom?.subject || 'Classroom'"></app-header>
-<div class="classroom-page-wrapper">
-  <div class="classroom-header">
-    <button class="btn btn-back" (click)="goBack()">← Back to Dashboard</button>
-    <h2 class="classroom-title">{{ classroom?.subject }}</h2>
-  </div>
-
-  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
-    {{ message }}
-  </div>
-
-  <div class="classroom-info-card">
-    <div class="info-row">
-      <div class="info-item">
-        <strong>Teacher:</strong>
-        <span>{{ getFullName(classroom?.teacher) || classroom?.teacher_name }}</span>
+<div class="classroom-container">
+  <div class="header-section">
+    <div class="header-content">
+      <div class="dashboard-title">Dashboard</div>
+      <div class="header-right">
+        <div class="user-info" routerLink="/profile">
+          <div class="user-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="user-text">
+            <div class="user-name">Student Lorem Ipsum</div>
+          </div>
+        </div>
       </div>
-      <div class="info-item">
-        <strong>Additional Info:</strong>
-        <span>{{ classroom?.additional_info || 'None' }}</span>
-      </div>
-    </div>
-    <div class="attendance-button-container">
-      <button class="btn btn-attendance" (click)="viewAttendance()">Student's Attendance</button>
     </div>
   </div>
 
-  <div class="sessions-section">
-    <h3 class="section-title">Sessions</h3>
+  <div class="main-content">
+    <div class="content-wrapper">
+      <button class="back-button" routerLink="/student/dashboard">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Back</span>
+      </button>
+      <div class="subject-panel">
+        <div class="subject-info-box">
+          <div class="subject-name-large">Subject Name</div>
+          <div class="subject-info-text">Additional Info</div>
+          <div class="subject-teacher-text">Subject Teacher Name</div>
+        </div>
 
-    <div class="sessions-list">
-      <div *ngFor="let session of sessions" class="session-card">
-        <div class="session-header">
-          <div>
-            <h4>{{ session.topic }}</h4>
-            <p class="session-date">{{ session.date | date:'fullDate' }}</p>
-            <p class="session-time">Created: {{ session.time_created | date:'short' }}</p>
+        <div class="sessions-section">
+          <div class="sessions-title">Sessions</div>
+          <div class="table-headers">
+            <div class="table-header-group">
+              <div class="sub-header">A</div>
+              <div class="main-header"></div>
+            </div>
+            <div class="table-header-group">
+              <div class="sub-header">B</div>
+              <div class="main-header">Title</div>
+            </div>
+            <div class="table-header-group">
+              <div class="sub-header">C</div>
+              <div class="main-header">Time</div>
+            </div>
+            <div class="table-header-group status-header">
+              <div class="main-header">Date</div>
+            </div>
           </div>
-          <div class="session-status">
-            <span class="badge" [ngClass]="session.is_open ? 'badge-open' : 'badge-closed'">
-              {{ session.is_open ? 'Open' : 'Closed' }}
-            </span>
-            <span class="status-badge" [ngClass]="'status-' + getStudentStatus(session)">
-              Your Status: {{ getStudentStatus(session) | titlecase }}
-            </span>
+
+          <div class="sessions-table">
+            <div class="table-row">
+              <div class="row-number">1.</div>
+              <div class="table-cell">Topic 1- Introduction</div>
+              <div class="table-cell">08:00</div>
+              <div class="table-cell">11/27/2025</div>
+              <div class="status-indicator active">
+                <div class="green-dot"></div>
+              </div>
+            </div>
+            <div class="table-row">
+              <div class="row-number">2.</div>
+              <div class="table-cell"></div>
+              <div class="table-cell"></div>
+              <div class="table-cell"></div>
+              <div class="status-indicator">
+                <div class="green-dot inactive"></div>
+              </div>
+            </div>
+            <div class="table-row">
+              <div class="row-number">3.</div>
+              <div class="table-cell"></div>
+              <div class="table-cell"></div>
+              <div class="table-cell"></div>
+              <div class="status-indicator">
+                <div class="green-dot inactive"></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="session-actions">
-          <button 
-            class="btn btn-mark-present" 
-            (click)="markPresent(session.id)"
-            [disabled]="!session.is_open || isAlreadyPresent(session)">
-            {{ isAlreadyPresent(session) ? 'Already Marked' : 'Mark Present' }}
-          </button>
-        </div>
-      </div>
-      <div *ngIf="sessions.length === 0" class="empty-state">
-        <p>No sessions yet. Wait for your teacher to create a session.</p>
       </div>
     </div>
   </div>

@@ -22,10 +22,6 @@ export class Header implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
-    // Listen for user updates
-    window.addEventListener('userUpdated', () => {
-      this.loadUser();
-    });
   }
 
   loadUser() {
@@ -40,12 +36,19 @@ export class Header implements OnInit {
     this.showProfileMenu = false;
   }
 
-  goToProfile() {
+  goToLogin() {
     this.closeProfileMenu();
-    this.router.navigate(['/profile']).then(() => {
-      // Reload user data after navigation in case profile was updated
-      setTimeout(() => this.loadUser(), 500);
-    });
+    this.router.navigate(['/login']);
+  }
+
+  goToProfile() {
+    if (!this.user) {
+      alert('Not signed in');
+      this.closeProfileMenu();
+      return;
+    }
+    this.closeProfileMenu();
+    this.router.navigate(['/profile']);
   }
 
   logout() {
@@ -62,11 +65,12 @@ export class Header implements OnInit {
   }
 
   getFullName(): string {
-    if (!this.user) return '';
+    if (!this.user) return 'Guest';
     return `${this.user.first_name} ${this.user.middle_initial ? this.user.middle_initial + '.' : ''} ${this.user.last_name}`.trim();
   }
 
   getProfilePictureUrl(): string {
+    if (!this.user) return '/images/blankpfp.png';
     if (this.user?.profile_picture) {
       // If it's a full URL, return as is
       if (this.user.profile_picture.startsWith('http')) {

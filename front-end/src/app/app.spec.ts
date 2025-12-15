@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { App } from './app.component';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [App, RouterTestingModule],
+      providers: [provideHttpClient()]
     }).compileComponents();
   });
 
@@ -14,10 +17,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', () => {
+  it('should have router outlet', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, front-end');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

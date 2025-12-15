@@ -14,6 +14,7 @@ import { AuthService } from '../services/auth.service';
 export class Login {
   credentials = { email: '', password: '' };
   message = '';
+  isLoading = false;
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -24,6 +25,7 @@ export class Login {
     }
 
     this.message = '';
+    this.isLoading = true;
     this.auth.login(this.credentials).subscribe({
       next: (res: any) => {
         // Save token and user info (backend returns access_token)
@@ -42,9 +44,11 @@ export class Login {
         } else {
           this.message = 'Invalid user role';
         }
+        this.isLoading = false;
       },
       error: (err) => {
-        this.message = err.error?.message || err.error?.error || 'Login failed!';
+        alert(err.error?.message || err.error?.error || 'Login failed!');
+        this.isLoading = false;
       }
     });
   }

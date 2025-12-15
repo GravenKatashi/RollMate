@@ -1,181 +1,77 @@
-<app-header title="My Profile"></app-header>
-<div class="profile-page-wrapper">
-  <div class="profile-container">
-    <div class="profile-header">
-      <h2 class="profile-title">My Profile</h2>
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-picture">
+      <img [src]="getProfilePictureUrl()" alt="Profile Picture" class="profile-picture-large" />
+      <div *ngIf="isEditing" class="file-upload-container">
+        <label for="profile-picture-upload" class="file-upload-label">
+          <span class="upload-icon">📷</span>
+        </label>
+        <input
+          type="file"
+          id="profile-picture-upload"
+          accept="image/jpeg,image/jpg,image/png,image/gif"
+          (change)="onFileSelected($event)"
+          style="display: none;"
+        />
+      </div>
     </div>
+    <div class="profile-name">{{ getFullName() }}</div>
+  </div>
 
-    <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
+  <div class="contact-section">
+    <div *ngIf="message" class="alert alert-danger" role="alert">
       {{ message }}
     </div>
 
-    <div class="profile-content">
-      <!-- Profile Picture Section -->
-      <div class="profile-picture-section">
-        <img [src]="getProfilePictureUrl()" alt="Profile Picture" class="profile-picture-large" />
-        <div *ngIf="isEditing" class="file-upload-container">
-          <label for="profile-picture-upload" class="file-upload-label">
-            <span class="upload-icon">📷</span>
-            Choose New Picture
-          </label>
-          <input 
-            type="file" 
-            id="profile-picture-upload" 
-            accept="image/jpeg,image/jpg,image/png,image/gif"
-            (change)="onFileSelected($event)"
-            style="display: none;"
-          />
-        </div>
-        <div *ngIf="previewUrl && selectedFile" class="preview-note">
-          <small>Preview of new picture</small>
-        </div>
+    <div class="contact-row">
+      <span class="contact-label">Phone</span>
+      <span class="contact-value" *ngIf="!isEditing">{{ user?.phone || 'Not provided' }}</span>
+      <input *ngIf="isEditing" type="text" class="form-control" [(ngModel)]="user.phone" placeholder="Phone">
+    </div>
+    <div class="contact-row">
+      <span class="contact-label">E-Mail</span>
+      <span class="contact-value">{{ user?.email }}</span>
+    </div>
+    <div class="divider"></div>
+
+    <div *ngIf="isEditing" class="edit-buttons">
+      <button class="btn btn-primary" (click)="saveProfile()">Save Changes</button>
+      <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="menu-section">
+    <div class="menu-item" (click)="enableEdit()">
+      <div class="menu-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="7" r="4" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
+      <span class="menu-text">Edit Profile</span>
+    </div>
+    <div class="divider"></div>
 
-      <!-- User Information -->
-      <div class="profile-info-section">
-        <div class="info-grid">
-          <div class="info-item">
-            <label class="info-label">Email</label>
-            <div class="info-value readonly">{{ user?.email }}</div>
-            <small class="info-note">Email cannot be changed</small>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">First Name</label>
-            <input 
-              *ngIf="isEditing"
-              type="text" 
-              class="form-control" 
-              [(ngModel)]="user.first_name"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.first_name }}</div>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">Middle Initial</label>
-            <input 
-              *ngIf="isEditing"
-              type="text" 
-              class="form-control" 
-              [(ngModel)]="user.middle_initial"
-              maxlength="1"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.middle_initial || '-' }}</div>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">Last Name</label>
-            <input 
-              *ngIf="isEditing"
-              type="text" 
-              class="form-control" 
-              [(ngModel)]="user.last_name"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.last_name }}</div>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">Age</label>
-            <input 
-              *ngIf="isEditing"
-              type="number" 
-              class="form-control" 
-              [(ngModel)]="user.age"
-              min="1"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.age }}</div>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">Gender</label>
-            <select 
-              *ngIf="isEditing"
-              class="form-control" 
-              [(ngModel)]="user.gender"
-              [disabled]="!isEditing"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-            <div *ngIf="!isEditing" class="info-value">{{ user?.gender }}</div>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">Date of Birth</label>
-            <input 
-              *ngIf="isEditing"
-              type="date" 
-              class="form-control" 
-              [(ngModel)]="user.date_of_birth"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.date_of_birth | date:'fullDate' }}</div>
-          </div>
-
-          <div class="info-item">
-            <label class="info-label">Recovery Email</label>
-            <input 
-              *ngIf="isEditing"
-              type="email" 
-              class="form-control" 
-              [(ngModel)]="user.recovery_email"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.recovery_email }}</div>
-          </div>
-
-          <div class="info-item" *ngIf="user?.role === 'teacher'">
-            <label class="info-label">School Affiliation</label>
-            <input 
-              *ngIf="isEditing"
-              type="text" 
-              class="form-control" 
-              [(ngModel)]="user.school_affiliation"
-              [disabled]="!isEditing"
-            />
-            <div *ngIf="!isEditing" class="info-value">{{ user?.school_affiliation || '-' }}</div>
-          </div>
-
-          <div class="info-item" *ngIf="isEditing">
-            <label class="info-label">New Password (optional)</label>
-            <input 
-              type="password" 
-              class="form-control" 
-              [(ngModel)]="password"
-              placeholder="Leave blank to keep current password"
-            />
-          </div>
-
-          <div class="info-item" *ngIf="isEditing && password">
-            <label class="info-label">Confirm Password</label>
-            <input 
-              type="password" 
-              class="form-control" 
-              [(ngModel)]="passwordConfirmation"
-              placeholder="Confirm new password"
-            />
-          </div>
-        </div>
+    <div class="menu-item">
+      <div class="menu-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="3" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
+      <span class="menu-text">Settings</span>
+    </div>
+    <div class="divider"></div>
 
-      <!-- Action Buttons -->
-      <div class="profile-actions">
-        <button 
-          *ngIf="!isEditing" 
-          class="btn btn-primary" 
-          (click)="enableEdit()">
-          Change Profile
-        </button>
-        <div *ngIf="isEditing" class="edit-actions">
-          <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
-          <button class="btn btn-primary" (click)="saveChanges()">Save Changes</button>
-        </div>
+    <div class="menu-item" (click)="logout()">
+      <div class="menu-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="16 17 21 12 16 7" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="21" y1="12" x2="9" y2="12" stroke="#5C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </div>
+      <span class="menu-text">Log out</span>
     </div>
   </div>
 </div>

@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { SessionService } from '../services/session.service';
-import { Header } from '../components/header/header';
 
 @Component({
   selector: 'app-student-attendance-calendar',
   standalone: true,
-  imports: [CommonModule, RouterModule, Header],
+  imports: [CommonModule, RouterModule],
   templateUrl: './student-attendance-calendar.html',
   styleUrls: ['./student-attendance-calendar.css']
 })

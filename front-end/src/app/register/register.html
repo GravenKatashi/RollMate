@@ -1,213 +1,62 @@
-<div class="register-wrapper">
-  <div class="register-card">
-    <h2 class="register-title">Create Account</h2>
-    <p class="register-subtitle">Join RollMate</p>
-          
-          <div *ngIf="message" class="alert" [ngClass]="message.includes('successful') ? 'alert-success' : 'alert-danger'" role="alert">
-            {{ message }}
+<div class="register-container">
+  <div class="main-content">
+    <div class="tabs-container">
+      <div class="tab">
+        <span class="tab-text" routerLink="/login">Log In</span>
+        <div class="tab-underline"></div>
+      </div>
+      <div class="tab active">
+        <span class="tab-text active">Register</span>
+        <div class="tab-underline active"></div>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div *ngIf="message" class="alert alert-danger" role="alert">
+        {{ message }}
+      </div>
+      
+      <div class="form-group">
+        <label for="fullName" class="form-label">Full Name</label>
+        <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" [(ngModel)]="model.full_name" name="full_name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" class="form-input" placeholder="Enter your email address" [(ngModel)]="model.email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">I am a:</label>
+        <div class="role-selection">
+          <div class="role-option">
+            <input type="radio" id="student" name="role" value="student" class="role-radio" [(ngModel)]="model.role">
+            <label for="student" class="role-label">Student</label>
           </div>
+          <div class="role-option">
+            <input type="radio" id="teacher" name="role" value="teacher" class="role-radio" [(ngModel)]="model.role">
+            <label for="teacher" class="role-label">Teacher</label>
+          </div>
+        </div>
+      </div>
 
-          <form (ngSubmit)="register()">
-            <!-- Role Selection -->
-            <div class="mb-3">
-              <label class="form-label">I am a:</label>
-              <div class="btn-group w-100" role="group" [ngClass]="{'is-invalid-group': hasError('role')}">
-                <input type="radio" class="btn-check" name="role" id="student" value="student" 
-                       [checked]="userData.role === 'student'" (click)="selectRole('student')">
-                <label class="btn btn-outline-primary" for="student">Student</label>
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-input" placeholder="Enter your password" [(ngModel)]="model.password" name="password" required>
+      </div>
 
-                <input type="radio" class="btn-check" name="role" id="teacher" value="teacher"
-                       [checked]="userData.role === 'teacher'" (click)="selectRole('teacher')">
-                <label class="btn btn-outline-primary" for="teacher">Teacher</label>
-              </div>
-              <div *ngIf="hasError('role')" class="invalid-feedback">
-                {{ getError('role') }}
-              </div>
-            </div>
+      <div class="form-group">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" [(ngModel)]="model.password_confirmation" name="password_confirmation" required>
+      </div>
 
-            <!-- Personal Information -->
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
-                <input type="text" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('first_name')}"
-                       id="first_name" 
-                       [(ngModel)]="userData.first_name" 
-                       name="first_name" 
-                       (input)="clearFieldError('first_name')"
-                       required>
-                <div *ngIf="hasError('first_name')" class="invalid-feedback">
-                  {{ getError('first_name') }}
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="middle_initial" class="form-label">Middle Initial</label>
-                <input type="text" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('middle_initial')}"
-                       id="middle_initial" 
-                       maxlength="1"
-                       [(ngModel)]="userData.middle_initial" 
-                       name="middle_initial"
-                       (input)="clearFieldError('middle_initial')">
-                <div *ngIf="hasError('middle_initial')" class="invalid-feedback">
-                  {{ getError('middle_initial') }}
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
-                <input type="text" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('last_name')}"
-                       id="last_name" 
-                       [(ngModel)]="userData.last_name" 
-                       name="last_name" 
-                       (input)="clearFieldError('last_name')"
-                       required>
-                <div *ngIf="hasError('last_name')" class="invalid-feedback">
-                  {{ getError('last_name') }}
-                </div>
-              </div>
-            </div>
+      <button type="button" class="submit-button" (click)="onRegister()" [disabled]="isLoading">
+        {{ isLoading ? 'Registering...' : 'Register' }}
+      </button>
 
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="age" class="form-label">Age <span class="text-danger">*</span></label>
-                <input type="number" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('age')}"
-                       id="age" 
-                       [(ngModel)]="userData.age" 
-                       name="age" 
-                       (input)="clearFieldError('age')"
-                       required min="1">
-                <div *ngIf="hasError('age')" class="invalid-feedback">
-                  {{ getError('age') }}
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
-                <select class="form-select" 
-                        [ngClass]="{'is-invalid': hasError('gender')}"
-                        id="gender" 
-                        [(ngModel)]="userData.gender" 
-                        name="gender" 
-                        (change)="clearFieldError('gender')"
-                        required>
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                <div *ngIf="hasError('gender')" class="invalid-feedback">
-                  {{ getError('gender') }}
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="date_of_birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
-                <input type="date" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('date_of_birth')}"
-                       id="date_of_birth" 
-                       [(ngModel)]="userData.date_of_birth" 
-                       name="date_of_birth" 
-                       (change)="clearFieldError('date_of_birth')"
-                       required>
-                <div *ngIf="hasError('date_of_birth')" class="invalid-feedback">
-                  {{ getError('date_of_birth') }}
-                </div>
-              </div>
-            </div>
-
-            <!-- School Affiliation (for teachers) -->
-            <div class="mb-3" *ngIf="userData.role === 'teacher'">
-              <label for="school_affiliation" class="form-label">School Affiliation <span class="text-danger">*</span></label>
-              <input type="text" 
-                     class="form-control" 
-                     [ngClass]="{'is-invalid': hasError('school_affiliation')}"
-                     id="school_affiliation" 
-                     [(ngModel)]="userData.school_affiliation" 
-                     name="school_affiliation" 
-                     (input)="clearFieldError('school_affiliation')"
-                     required>
-              <div *ngIf="hasError('school_affiliation')" class="invalid-feedback">
-                {{ getError('school_affiliation') }}
-              </div>
-            </div>
-
-            <!-- Account Information -->
-            <div class="mb-3">
-              <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-              <input type="email" 
-                     class="form-control" 
-                     [ngClass]="{'is-invalid': hasError('email')}"
-                     id="email" 
-                     [(ngModel)]="userData.email" 
-                     name="email" 
-                     (input)="clearFieldError('email')"
-                     required>
-              <div *ngIf="hasError('email')" class="invalid-feedback">
-                {{ getError('email') }}
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                <input type="password" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('password')}"
-                       id="password" 
-                       [(ngModel)]="userData.password" 
-                       name="password" 
-                       (input)="clearFieldError('password')"
-                       required minlength="8">
-                <small *ngIf="!hasError('password')" class="form-text text-muted">Minimum 8 characters</small>
-                <div *ngIf="hasError('password')" class="invalid-feedback">
-                  {{ getError('password') }}
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                <input type="password" 
-                       class="form-control" 
-                       [ngClass]="{'is-invalid': hasError('password_confirmation')}"
-                       id="password_confirmation" 
-                       [(ngModel)]="userData.password_confirmation" 
-                       name="password_confirmation" 
-                       (input)="clearFieldError('password_confirmation')"
-                       required>
-                <div *ngIf="hasError('password_confirmation')" class="invalid-feedback">
-                  {{ getError('password_confirmation') }}
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="recovery_email" class="form-label">Recovery Email <span class="text-danger">*</span></label>
-              <input type="email" 
-                     class="form-control" 
-                     [ngClass]="{'is-invalid': hasError('recovery_email')}"
-                     id="recovery_email" 
-                     [(ngModel)]="userData.recovery_email" 
-                     name="recovery_email" 
-                     (input)="clearFieldError('recovery_email')"
-                     required>
-              <small *ngIf="!hasError('recovery_email')" class="form-text text-muted">Used for password recovery</small>
-              <div *ngIf="hasError('recovery_email')" class="invalid-feedback">
-                {{ getError('recovery_email') }}
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loading">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-              Register
-            </button>
-          </form>
-
-    <div class="login-link">
-      <p class="mb-0">Already have an account? <a routerLink="/login">Login here</a></p>
+      <div class="register-link">
+        <span>Already have an account? <a routerLink="/login" class="link-text">Login here</a></span>
+      </div>
     </div>
   </div>
 </div>

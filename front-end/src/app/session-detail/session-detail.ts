@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { SessionService } from '../services/session.service';
-import { ClassroomService } from '../services/classroom.service';
-import { Header } from '../components/header/header';
 
 @Component({
   selector: 'app-session-detail',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, Header],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './session-detail.html',
-  styleUrls: ['./session-detail.css']
+  styleUrl: './session-detail.css',
 })
-export class SessionDetail implements OnInit {
-  classroom: any = null;
+export class SessionDetail {
   session: any = null;
   students: any[] = [];
   sortedStudents: any[] = [];
@@ -25,94 +20,63 @@ export class SessionDetail implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private sessionService: SessionService,
-    private classroomService: ClassroomService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    const user = JSON.parse(storedUser);
-    if (user.role !== 'teacher') {
-      this.router.navigate(['/teacher-dashboard']);
-      return;
-    }
-
+    // Mock data for demonstration
     this.route.params.subscribe(params => {
       this.classroomId = +params['classroomId'];
       this.sessionId = +params['sessionId'];
-      this.loadData();
-    });
-  }
 
-  loadData() {
-    this.classroomService.getTeacherClassrooms().subscribe({
-      next: (res: any) => {
-        const classrooms = res.data || res || [];
-        this.classroom = classrooms.find((c: any) => c.id === this.classroomId);
-        if (!this.classroom) {
-          this.router.navigate(['/teacher-dashboard']);
-          return;
-        }
-        this.loadSession();
-      },
-      error: (err) => {
-        this.message = 'Failed to load classroom.';
-        console.error(err);
-      }
-    });
-  }
-
-  loadSession() {
-    this.sessionService.getSessions(this.classroomId).subscribe({
-      next: (res: any) => {
-        const sessions = res.data || res || [];
-        this.session = sessions.find((s: any) => s.id === this.sessionId);
-        if (!this.session) {
-          this.router.navigate(['/teacher-classroom', this.classroomId]);
-          return;
-        }
-        this.loadStudents();
-      },
-      error: (err) => {
-        this.message = 'Failed to load session.';
-        console.error(err);
-      }
-    });
-  }
-
-  loadStudents() {
-    // Get all students enrolled in the classroom
-    const enrolledStudentIds = this.classroom.students?.map((s: any) => s.id) || [];
-    
-    // Get attendance records for this session
-    const attendances = this.session.attendances || [];
-    
-    // Create a map of student_id to attendance
-    const attendanceMap = new Map();
-    attendances.forEach((att: any) => {
-      attendanceMap.set(att.student_id, att);
-    });
-
-    // Combine students with their attendance
-    this.students = this.classroom.students?.map((student: any) => {
-      const attendance = attendanceMap.get(student.id);
-      return {
-        ...student,
-        attendance: attendance || {
-          id: null,
-          status: 'absent',
-          time_present: null
-        }
+      // Mock session data
+      this.session = {
+        id: this.sessionId,
+        topic: 'Introduction to Algebra',
+        date: '2025-12-15',
+        time_created: '2025-12-15T08:00:00',
+        is_open: true
       };
-    }) || [];
 
-    this.sortStudents();
+      // Mock students data
+      this.students = [
+        {
+          id: 1,
+          first_name: 'John',
+          last_name: 'Doe',
+          middle_initial: 'A',
+          attendance: {
+            id: 1,
+            status: 'present',
+            time_present: '08:15 AM'
+          }
+        },
+        {
+          id: 2,
+          first_name: 'Jane',
+          last_name: 'Smith',
+          middle_initial: 'B',
+          attendance: {
+            id: 2,
+            status: 'late',
+            time_present: '08:45 AM'
+          }
+        },
+        {
+          id: 3,
+          first_name: 'Bob',
+          last_name: 'Johnson',
+          middle_initial: 'C',
+          attendance: {
+            id: 3,
+            status: 'absent',
+            time_present: null
+          }
+        }
+      ];
+
+      this.sortStudents();
+    });
   }
 
   sortStudents() {
@@ -136,32 +100,19 @@ export class SessionDetail implements OnInit {
 
   updateStatus(studentId: number, status: 'present' | 'absent' | 'late') {
     const student = this.students.find(s => s.id === studentId);
-    if (!student || !student.attendance.id) return;
-
-    this.sessionService.updateAttendance(student.attendance.id, { status }).subscribe({
-      next: () => {
-        this.message = 'Status updated successfully!';
-        this.loadSession();
-      },
-      error: (err) => {
-        this.message = err.error?.message || 'Failed to update status.';
+    if (student) {
+      student.attendance.status = status;
+      if (status === 'present' && !student.attendance.time_present) {
+        student.attendance.time_present = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
       }
-    });
+      this.sortStudents();
+      this.message = 'Status updated successfully!';
+    }
   }
 
   markLate(studentId: number) {
-    const student = this.students.find(s => s.id === studentId);
-    if (!student || !student.attendance.id) return;
-
-    this.sessionService.markLate(student.attendance.id).subscribe({
-      next: () => {
-        this.message = 'Student marked as late!';
-        this.loadSession();
-      },
-      error: (err) => {
-        this.message = err.error?.message || 'Failed to mark as late.';
-      }
-    });
+    this.updateStatus(studentId, 'late');
+    this.message = 'Student marked as late!';
   }
 
   getFullName(student: any): string {

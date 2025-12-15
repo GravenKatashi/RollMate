@@ -2,7 +2,6 @@
   <div class="header-content">
     <div class="header-left">
       <img src="/images/title_logo.png" alt="Logo" class="header-logo" />
-      <h1 class="header-title">{{ title }}</h1>
     </div>
     <div class="header-right">
       <div class="profile-container">
@@ -18,11 +17,15 @@
             <div class="menu-user-name">{{ getFullName() }}</div>
           </div>
           <div class="profile-menu-actions">
+            <button class="menu-button" *ngIf="!user" (click)="goToLogin()">
+              <span class="menu-icon">🔑</span>
+              Login
+            </button>
             <button class="menu-button" (click)="goToProfile()">
               <span class="menu-icon">👤</span>
               Profile
             </button>
-            <button class="menu-button logout-button" (click)="logout()">
+            <button class="menu-button logout-button" *ngIf="user" (click)="logout()">
               <span class="menu-icon">🚪</span>
               Logout
             </button>

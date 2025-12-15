@@ -5,7 +5,10 @@ RUN apt-get update && apt-get install -y \
     git \
     zip \
     unzip \
-    curl
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql
@@ -13,11 +16,14 @@ RUN docker-php-ext-install pdo pdo_mysql
 # Set working directory
 WORKDIR /var/www
 
-# Copy project files
+# Copy application files
 COPY . .
 
-# Expose port (Laravel runs on 8000 inside container)
+# Ensure storage & cache are writable
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+# Expose Laravel port
 EXPOSE 8000
 
-# Start Laravel dev server
+# Run Laravel dev server (bind to all interfaces INSIDE container)
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

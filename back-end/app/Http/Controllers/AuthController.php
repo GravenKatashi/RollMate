@@ -18,31 +18,20 @@ class AuthController extends Controller
         $role = $request->input('role');
 
         $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'middle_initial' => 'nullable|string|max:1',
-            'last_name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'role' => ['required', Rule::in(['student','teacher'])],
-            'age' => 'required|integer|min:1',
-            'gender' => 'required|string',
-            'date_of_birth' => 'required|date',
             'school_affiliation' => $role === 'teacher' ? 'required|string|max:255' : 'nullable',
-            'recovery_email' => 'required|string|email',
         ]);
 
         $user = User::create([
-            'first_name' => $validated['first_name'],
-            'middle_initial' => $validated['middle_initial'] ?? '',
-            'last_name' => $validated['last_name'],
+            'full_name' => $validated['full_name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
-            'age' => $validated['age'],
-            'gender' => $validated['gender'],
-            'date_of_birth' => $validated['date_of_birth'],
             'school_affiliation' => $validated['school_affiliation'] ?? null,
-            'recovery_email' => $validated['recovery_email'],
+            'recovery_email' => $validated['email'],
         ]);
 
         return response()->json([

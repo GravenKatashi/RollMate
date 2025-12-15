@@ -1,59 +1,100 @@
-<app-header title="Student Dashboard"></app-header>
-<div class="dashboard-wrapper">
-
-  <div *ngIf="message" class="alert" [ngClass]="message.includes('successfully') ? 'alert-success' : 'alert-danger'" role="alert">
-    {{ message }}
-  </div>
-
-  <!-- Join Classroom Button -->
-  <div class="mb-3">
-    <button class="btn btn-create" (click)="showJoinModal = true">+ Join Classroom</button>
-  </div>
-
-  <!-- Join Classroom Modal -->
-  <div class="modal" [class.show]="showJoinModal" *ngIf="showJoinModal" style="display: block; background: rgba(0,0,0,0.5);">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Join Classroom</h5>
-          <button type="button" class="btn-close" (click)="showJoinModal = false; joinCode = ''"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Enter Classroom Code</label>
-            <input type="text" 
-                   class="form-control text-uppercase" 
-                   [(ngModel)]="joinCode" 
-                   placeholder="e.g., ABC123"
-                   maxlength="6"
-                   (input)="joinCode = joinCode.toUpperCase()">
-            <small class="form-text text-muted">Enter the 6-character code provided by your teacher</small>
+<div class="dashboard-container">
+  <div class="header-section">
+    <div class="header-content">
+      <div class="dashboard-title">Dashboard</div>
+      <div class="header-right">
+        <div class="user-info" routerLink="/profile">
+          <div class="user-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="7" r="4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="user-text">
+            <div class="user-name">Student Lorem Ipsum</div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="showJoinModal = false; joinCode = ''">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="joinClassroom()">Join</button>
-        </div>
       </div>
     </div>
   </div>
 
-  <!-- Classrooms List -->
-  <div class="classrooms-grid">
-    <div *ngFor="let classroom of classrooms" class="classroom-card" (click)="selectClassroom(classroom)">
-      <div class="classroom-card-header">
-        <h4>{{ classroom.subject }}</h4>
+  <div class="main-content">
+    <div class="content-wrapper">
+      <div class="top-section">
+        <div class="class-code-section">
+          <div class="section-title">Enter class code:</div>
+          <div class="input-wrapper">
+            <input type="text" class="class-code-input" placeholder="Code">
+            <div class="search-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="11" cy="11" r="8" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="m21 21-4.35-4.35" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="datetime-card">
+          <div class="time-text">12:00 PM</div>
+          <div class="date-text">Tuesday - 11/25/2025</div>
+        </div>
       </div>
-      <p class="classroom-description">{{ classroom.additional_info || 'No description' }}</p>
-      <div class="classroom-teacher">
-        <strong>Teacher:</strong> {{ classroom.teacher_name || getFullName(classroom.teacher) }}
+
+      <div class="subjects-grid">
+        <div class="subject-card" routerLink="/student/classroom">
+          <div class="subject-header subject-header-red">
+            <div class="subject-name">Subject Name</div>
+            <div class="subject-info">Additional Info</div>
+            <div class="subject-teacher">Subject Teacher Name</div>
+          </div>
+          <div class="subject-body"></div>
+        </div>
+
+        <div class="subject-card" routerLink="/student/classroom">
+          <div class="subject-header subject-header-orange">
+            <div class="subject-name">Subject Name</div>
+            <div class="subject-info">Additional Info</div>
+            <div class="subject-teacher">Subject Teacher Name</div>
+          </div>
+          <div class="subject-body"></div>
+        </div>
+
+        <div class="subject-card" routerLink="/student/classroom">
+          <div class="subject-header subject-header-green">
+            <div class="subject-name">Subject Name</div>
+            <div class="subject-info">Additional Info</div>
+            <div class="subject-teacher">Subject Teacher Name</div>
+          </div>
+          <div class="subject-body"></div>
+        </div>
+
+        <div class="subject-card" routerLink="/student/classroom">
+          <div class="subject-header subject-header-cyan">
+            <div class="subject-name">Subject Name</div>
+            <div class="subject-info">Additional Info</div>
+            <div class="subject-teacher">Subject Teacher Name</div>
+          </div>
+          <div class="subject-body"></div>
+        </div>
+
+        <div class="subject-card" routerLink="/student/classroom">
+          <div class="subject-header subject-header-blue">
+            <div class="subject-name">Subject Name</div>
+            <div class="subject-info">Additional Info</div>
+            <div class="subject-teacher">Subject Teacher Name</div>
+          </div>
+          <div class="subject-body"></div>
+        </div>
+
+        <div class="subject-card" routerLink="/student/classroom">
+          <div class="subject-header subject-header-pink">
+            <div class="subject-name">Subject Name</div>
+            <div class="subject-info">Additional Info</div>
+            <div class="subject-teacher">Subject Teacher Name</div>
+          </div>
+          <div class="subject-body"></div>
+        </div>
       </div>
-      <div class="classroom-stats">
-        <span><strong>{{ classroom.sessions?.length || 0 }}</strong> Sessions</span>
-      </div>
-    </div>
-    <div *ngIf="classrooms.length === 0" class="empty-classrooms">
-      <p>You haven't joined any classrooms yet. Click "Join Classroom" to get started!</p>
     </div>
   </div>
 </div>

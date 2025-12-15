@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
-import { Header } from '../components/header/header';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, Header],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './profile.html',
   styleUrls: ['./profile.css']
 })
@@ -151,6 +150,7 @@ export class Profile implements OnInit {
       gender: this.user.gender,
       date_of_birth: this.user.date_of_birth,
       recovery_email: this.user.recovery_email,
+      phone: this.user.phone || '',
     };
 
     if (this.user.school_affiliation !== undefined) {
@@ -190,6 +190,15 @@ export class Profile implements OnInit {
   getFullName(): string {
     if (!this.user) return '';
     return `${this.user.last_name}, ${this.user.first_name} ${this.user.middle_initial ? this.user.middle_initial + '.' : ''}`.trim();
+  }
+
+  saveProfile() {
+    this.saveChanges();
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
   }
 
   getProfilePictureUrl(): string {

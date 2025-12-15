@@ -8,6 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
             $table->enum('role', ['student', 'teacher']);
 
@@ -24,7 +25,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('password');
             
-            $table->string('recovery_email')->unique();
+            $table->string('recovery_email')->nullable()->unique();
 
             $table->timestamps();
         });

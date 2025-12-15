@@ -1,24 +1,15 @@
-import { Route } from '@angular/router';
-import { Login } from './login/login';
-import { Register } from './register/register';
-import { StudentDashboard } from './student-dashboard/student-dashboard';
-import { TeacherDashboard } from './teacher-dashboard/teacher-dashboard';
-import { TeacherClassroom } from './teacher-classroom/teacher-classroom';
-import { SessionDetail } from './session-detail/session-detail';
-import { StudentClassroom } from './student-classroom/student-classroom';
-import { StudentAttendanceCalendar } from './student-attendance-calendar/student-attendance-calendar';
-import { Profile } from './profile/profile';
+import { Routes } from '@angular/router';
 
-export const routes: Route[] = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: 'student-dashboard', component: StudentDashboard },
-  { path: 'teacher-dashboard', component: TeacherDashboard },
-  { path: 'teacher-classroom/:id', component: TeacherClassroom },
-  { path: 'teacher-classroom/:classroomId/session/:sessionId', component: SessionDetail },
-  { path: 'student-classroom/:id', component: StudentClassroom },
-  { path: 'student-classroom/:id/attendance', component: StudentAttendanceCalendar },
-  { path: 'profile', component: Profile },
-  { path: '**', redirectTo: 'login' }
+export const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', loadComponent: () => import('./login/login').then(m => m.Login) },
+  { path: 'register', loadComponent: () => import('./register/register').then(m => m.Register) },
+  { path: 'profile', loadComponent: () => import('./profile/profile').then(m => m.Profile) },
+  { path: 'student/dashboard', loadComponent: () => import('./student-dashboard/student-dashboard').then(m => m.StudentDashboard) },
+  { path: 'teacher/dashboard', loadComponent: () => import('./teacher-dashboard/teacher-dashboard').then(m => m.TeacherDashboard) },
+  { path: 'student/classroom/:id', loadComponent: () => import('./student-classroom/student-classroom').then(m => m.StudentClassroom) },
+  { path: 'teacher/classroom/:id', loadComponent: () => import('./teacher-classroom/teacher-classroom').then(m => m.TeacherClassroom) },
+  { path: 'session-detail/:classroomId/:sessionId', loadComponent: () => import('./session-detail/session-detail').then(m => m.SessionDetail) },
+  { path: 'student/classroom/:id/attendance', loadComponent: () => import('./student-attendance-calendar/student-attendance-calendar').then(m => m.StudentAttendanceCalendar) },
+  { path: '**', redirectTo: '/login' }
 ];

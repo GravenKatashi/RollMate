@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Header } from './components/header/header';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  template: '<router-outlet></router-outlet>'
+  imports: [RouterOutlet, Header],
+  templateUrl: './app.html',
+  styleUrl: './app.css'
 })
 export class App {
-  title = 'RollMate';
+  protected readonly title = signal('webdev');
 }
 

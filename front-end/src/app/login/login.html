@@ -1,42 +1,42 @@
-<div class="login-wrapper">
-  <div class="login-card">
-    <h2 class="login-title">Welcome Back</h2>
-    <p class="login-subtitle">Sign in to your account</p>
-    
-    <div *ngIf="message" class="alert alert-danger" role="alert">
-      {{ message }}
+<div class="login-container">
+  <div class="main-content">
+    <div class="tabs-container">
+      <div class="tab active">
+        <span class="tab-text active">Log In</span>
+        <div class="tab-underline active"></div>
+      </div>
+      <div class="tab">
+        <span class="tab-text" routerLink="/register">Register</span>
+        <div class="tab-underline"></div>
+      </div>
     </div>
-
-    <form (ngSubmit)="login()">
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input 
-          type="email" 
-          class="form-control" 
-          id="email"
-          [(ngModel)]="credentials.email" 
-          name="email"
-          required
-          placeholder="Enter your email">
+    
+    <div class="form-container">
+      <div *ngIf="message" class="alert alert-danger" role="alert">
+        {{ message }}
       </div>
-
-      <div class="mb-3">
+      
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" class="form-input" placeholder="Enter your email address" [(ngModel)]="credentials.email" name="email" required>
+      </div>
+      
+      <div class="form-group">
         <label for="password" class="form-label">Password</label>
-        <input 
-          type="password" 
-          class="form-control" 
-          id="password"
-          [(ngModel)]="credentials.password" 
-          name="password"
-          required
-          placeholder="Enter your password">
+        <input type="password" id="password" class="form-input" placeholder="Enter your password" [(ngModel)]="credentials.password" name="password" required>
       </div>
-
-      <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
-    </form>
-
-    <div class="register-link">
-      <p class="mb-0">Don't have an account? <a routerLink="/register">Register here</a></p>
+      
+      <div class="forgot-password">
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      
+      <button type="button" class="submit-button" (click)="login()" [disabled]="isLoading">
+        {{ isLoading ? 'Logging In...' : 'Log In' }}
+      </button>
+      
+      <div class="register-link">
+        <span>Don't have an account? <a routerLink="/register" class="link-text">Register here</a></span>
+      </div>
     </div>
   </div>
 </div>

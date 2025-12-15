@@ -1,76 +1,110 @@
-/* Global Styles */
-* {
-  box-sizing: border-box;
-}
+/* Ensure Bootstrap is installed and linked in index.html */
+/* @import "bootstrap/dist/css/bootstrap.min.css"; */
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
+/* BASE SETUP: Figma Gradient Background */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background-color: #f8f9fa;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(to bottom, #7A74E9 0%, #D4E157 100%); /* Blue/Purple to Green/Yellow */
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    font-family: 'Georgia', serif; /* Approximation of the Figma's bold serif-like font */
+    color: #1e1e1e;
 }
 
-/* Bootstrap overrides */
-.btn {
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+/* APP HEADER: Fixed Top Bar Style */
+.app-header {
+    background: #5A40B9; /* Darker purple approximation */
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #A9A9A9;
+    margin-right: 10px;
+    border: 2px solid white;
+    flex-shrink: 0;
 }
 
-.card {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 1rem;
-  border: none;
+/* UI CARD DESIGN: Containers */
+.content-card {
+    background-color: white;
+    border: 3px solid black; /* Prominent border */
+    border-radius: 20px;
+    padding: 15px;
+    margin: 20px 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.modal {
-  backdrop-filter: blur(4px);
+/* SUBJECT HEADER: Colored Section on Cards */
+.subject-header {
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
+    padding: 15px;
+    margin: -15px -15px 15px -15px;
+    border-bottom: 3px solid black;
+}
+.subject-title {
+    font-size: 2.2em;
+    font-weight: 900;
+    color: black;
+    line-height: 1.1;
 }
 
-/* Utility classes */
-.text-muted {
-  color: #718096 !important;
+/* FIGMA COLOR PALETTE */
+.card-color-red { background-color: #F08080; }      /* Light Coral */
+.card-color-orange { background-color: #FFDDAA; }  /* Light Orange/Peach */
+.card-color-green { background-color: #90EE90; }     /* Light Green */
+.card-color-blue { background-color: #B0E0E6; }      /* Powder Blue (Create Button) */
+
+/* RIGHT SIDEBAR: Fixed Navigation */
+.right-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 60px;
+    background: linear-gradient(to bottom, #7A74E9, #B0E0E6);
+    border-left: 2px solid black;
+    padding-top: 100px;
+    z-index: 1030;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sidebar-icon {
+    color: black;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    cursor: pointer;
 }
 
-.bg-light {
-  background-color: #f7fafc !important;
+/* RESPONSIVENESS */
+@media (min-width: 768px) {
+    .main-content {
+        padding-right: 60px; /* Space for the fixed sidebar */
+    }
+}
+@media (max-width: 767px) {
+    .right-sidebar {
+        display: none; /* Hide sidebar on small screens */
+    }
 }
 
-/* Responsive utilities */
-@media (max-width: 576px) {
-  .container-fluid {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Focus styles for accessibility */
-*:focus {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
-}
-
-button:focus,
-a:focus {
-  outline: 2px solid #667eea;
-  outline-offset: 2px;
-}
-
-/* Loading spinner */
-.spinner-border-sm {
-  width: 1rem;
-  height: 1rem;
-  border-width: 0.15em;
+/* Active session pulsing effect (Student Classroom requirement) */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
 }

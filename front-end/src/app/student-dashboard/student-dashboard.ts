@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ClassroomService } from '../services/classroom.service';
-import { Header } from '../components/header/header';
 
 @Component({
   selector: 'app-student-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, Header],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './student-dashboard.html',
   styleUrls: ['./student-dashboard.css']
 })

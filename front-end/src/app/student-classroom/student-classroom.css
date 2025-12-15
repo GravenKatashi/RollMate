@@ -1,261 +1,280 @@
-.classroom-page-wrapper {
+.classroom-container {
   min-height: 100vh;
-  background: #f7fafc;
-  padding: 2rem;
+  background-color: #E5E5E5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.classroom-header {
+.header-section {
+  background: linear-gradient(90deg, #4A90E2 0%, #6B9FE8 100%);
+  padding: 16px 24px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-title {
+  color: #FFFFFF;
+  font-size: 32px;
+  font-weight: 700;
+  font-family: serif;
+}
+
+.header-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 16px;
 }
 
-.btn-back {
-  background: #e2e8f0;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  color: #2d3748;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-back:hover {
-  background: #cbd5e0;
-}
-
-.classroom-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin: 0;
-}
-
-.classroom-info-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.info-row {
+.user-info {
   display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.info-item {
+.user-info:hover {
+  opacity: 0.9;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-text {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
-.info-item strong {
-  color: #718096;
-  font-size: 0.9rem;
+.user-name {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: sans-serif;
 }
 
-.attendance-button-container {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 2px solid #e2e8f0;
+.menu-icon {
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.btn-attendance {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+.menu-icon:hover {
+  opacity: 0.8;
+}
+
+.main-content {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(180deg, #A8D8EA 0%, #CFFCFF 50%, #FCFFCF 100%);
+}
+
+.content-wrapper {
+  padding: 24px;
+  overflow-y: auto;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
   border-radius: 8px;
-  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  font-size: 14px;
   font-weight: 600;
-  color: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #000000;
+  font-family: sans-serif;
+  margin-bottom: 20px;
+  transition: background-color 0.2s;
 }
 
-.btn-attendance:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+.back-button:hover {
+  background-color: #F5F5F5;
+}
+
+.subject-panel {
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.subject-info-box {
+  background-color: #FFB6C1;
+  border: 2px solid #FFA500;
+  border-bottom: none;
+  padding: 24px;
+}
+
+.subject-name-large {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 12px;
+  font-family: serif;
+}
+
+.subject-info-text {
+  font-size: 18px;
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 8px;
+  font-family: serif;
+}
+
+.subject-teacher-text {
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  font-family: serif;
 }
 
 .sessions-section {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  border-top: 2px solid #FFA500;
 }
 
-.section-title {
-  font-size: 1.5rem;
+.sessions-title {
+  font-size: 24px;
   font-weight: 700;
-  color: #2d3748;
-  margin-bottom: 1.5rem;
-}
-
-.sessions-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.session-card {
-  background: #f7fafc;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.session-card:hover {
-  border-color: #667eea;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.session-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  gap: 1rem;
-}
-
-.session-header h4 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 0 0 0.5rem 0;
-}
-
-.session-date {
-  color: #718096;
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
-}
-
-.session-time {
-  color: #a0aec0;
-  margin: 0.25rem 0;
-  font-size: 0.85rem;
-}
-
-.session-status {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  align-items: flex-end;
-}
-
-.badge {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  display: inline-block;
-}
-
-.badge-open {
-  background: #c6f6d5;
-  color: #22543d;
-}
-
-.badge-closed {
-  background: #fed7d7;
-  color: #742a2a;
-}
-
-.status-badge {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  display: inline-block;
-}
-
-.status-present {
-  background: #c6f6d5;
-  color: #22543d;
-}
-
-.status-late {
-  background: #fefcbf;
-  color: #744210;
-}
-
-.status-absent {
-  background: #fed7d7;
-  color: #742a2a;
-}
-
-.session-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.btn-mark-present {
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  color: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-mark-present:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
-}
-
-.btn-mark-present:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background: #a0aec0;
-}
-
-.empty-state {
+  color: #000000;
   text-align: center;
-  padding: 3rem;
-  color: #718096;
+  margin-bottom: 20px;
+  font-family: sans-serif;
 }
 
-.alert {
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
+.table-headers {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 80px;
+  gap: 1px;
+  background-color: #000000;
+  border: 1px solid #000000;
+  margin-bottom: 0;
 }
 
-/* Mobile Responsive */
+.table-header-group {
+  background-color: #FFA500;
+  padding: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+
+.status-header {
+  background-color: #FFA500;
+}
+
+.status-header {
+  background-color: #D3D3D3;
+}
+
+.sub-header {
+  font-size: 12px;
+  color: #808080;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.main-header {
+  font-size: 16px;
+  color: #000000;
+  font-weight: 600;
+}
+
+.sessions-table {
+  border: 1px solid #000000;
+  border-top: none;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 80px;
+  gap: 1px;
+  background-color: #000000;
+  border-bottom: 1px solid #000000;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.row-number {
+  background-color: #FFFFFF;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+  color: #000000;
+}
+
+.table-cell {
+  background-color: #FFFFFF;
+  padding: 12px;
+  color: #000000;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.status-indicator {
+  background-color: #FFFFFF;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.green-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.6);
+}
+
+.green-dot.inactive {
+  background-color: #CCCCCC;
+  box-shadow: none;
+}
+
 @media (max-width: 768px) {
-  .classroom-page-wrapper {
-    padding: 1rem;
+  .dashboard-title {
+    font-size: 24px;
   }
 
-  .classroom-title {
-    font-size: 1.5rem;
+  .header-section {
+    padding: 12px 16px;
   }
 
-  .info-row {
-    flex-direction: column;
-    gap: 1rem;
+  .content-wrapper {
+    padding: 16px;
   }
 
-  .session-header {
-    flex-direction: column;
+  .table-row {
+    grid-template-columns: 30px 1fr 1fr 1fr 60px;
   }
 
-  .session-status {
-    align-items: flex-start;
-    width: 100%;
+  .table-headers {
+    grid-template-columns: 30px 1fr 1fr 1fr 60px;
   }
 
-  .session-actions {
-    width: 100%;
-  }
-
-  .btn-mark-present {
-    width: 100%;
+  .user-name {
+    font-size: 14px;
   }
 }
 
